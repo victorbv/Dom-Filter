@@ -3,7 +3,7 @@
 /*
 	List Search plugin 
 	Author: Victor Volker
-	Version: 0.1
+	Version: 0.2
 	Date: mar 06 2012
 	
 	searches text and filter elements, showing the results
@@ -23,7 +23,10 @@
 				var settings = $.extend( {
 			      'elements': 'tr',
 			      'input': $('input[type=text]')[0], 
-			      'searchable': ''
+			      'searchable': '',
+			      'alternataClasses': false,
+			      'oddClass': 'odd',
+			      'evenClass': 'even'
 			    }, options);
 			    
 				// build data array
@@ -63,19 +66,33 @@
 					previous_term = $this.data('previous_term');
 					searchShownOnly = (term.indexOf(previous_term) === 0);
 					searchHiddenOnly = (previous_term.indexOf(term) === 0);
-					data_array = $this.data('data_array')
+					data_array = $this.data('data_array');
+					odd = true;
 					for (line_id in data_array) {
 						line = data_array[line_id];
 						if ((!searchShownOnly || line.visible) || (!searchHiddenOnly && !line.visible)) {
 							if (term === '' || line.text.indexOf(term) !== -1) {
 								$('#' + line_id).show();
+								data_array[line_id].visible = true;
 							} else {
 								$('#' + line_id).hide();
+								data_array[line_id].visible = false;
 							}
+						}
+						// set alternate classes
+						if (settings.alternataClasses && data_array[line_id].visible) {
+							if (odd) {
+								$('#' + line_id).removeClass(settings.evenClass);
+								$('#' + line_id).addClass(settings.oddClass);
+							} else {
+								$('#' + line_id).removeClass(settings.oddClass);
+								$('#' + line_id).addClass(settings.evenClass);
+							}
+							odd = !odd;
 						}
 					}
 					$this.data('previous_term', term);
-
+					$this.data('data_array', data_array);
 				});
 				
 			});
