@@ -23,6 +23,7 @@ on this basic usage, all the #table1 rows will be filtered based on the first te
 * alternataClasses - defines whether the plugin will apply alternate classes on the rows or not. Dafault value is false.
 * oddClass - class for the odd rows, applied if alternataClasses is set to true. Defaults to 'odd'.
 * evenClass - class for the even rows, applied if alternataClasses is set to true. Defaults to 'even'.
+* ignoreFirstRow - whether the first row will be ignored or not (default: true)
 	
 example on how to filter a list and set a specific input text field:
 

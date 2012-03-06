@@ -3,7 +3,7 @@
 /*
 	List Search plugin 
 	Author: Victor Volker
-	Version: 0.2
+	Version: 0.3
 	Date: mar 06 2012
 	
 	searches text and filter elements, showing the results
@@ -26,7 +26,8 @@
 			      'searchable': '',
 			      'alternataClasses': false,
 			      'oddClass': 'odd',
-			      'evenClass': 'even'
+			      'evenClass': 'even',
+				  'ignoreFirstRow': true
 			    }, options);
 			    
 				// build data array
@@ -36,21 +37,25 @@
 				var i = 0;
 				var pre_id = 'sl' + (Math.round(1000 * Math.random()));
 				var $searchon;
+				var is_first = true;
 				
 				$($this.find(settings.elements)).each(function(){
-					$_this = $(this);
-					id = $_this.attr('id');
-					if (id == null) {
-						id = pre_id + '_' + i;
-						$_this.attr('id', id);
-						i++;
-					} 
-					text = '';
-					$searchon = settings.searchable ? $_this.find(settings.searchable) : $_this;
-					$searchon.each(function(){
-						text = text + ' ' + $(this).text().toLowerCase();
-					});
-					data_array[id] = { text: text, visible: $_this.is(':visible') };
+					if (!is_first || !settings.ignoreFirstRow) {
+						$_this = $(this);
+						id = $_this.attr('id');
+						if (id == null) {
+							id = pre_id + '_' + i;
+							$_this.attr('id', id);
+							i++;
+						} 
+						text = '';
+						$searchon = settings.searchable ? $_this.find(settings.searchable) : $_this;
+						$searchon.each(function(){
+							text = text + ' ' + $(this).text().toLowerCase();
+						});
+						data_array[id] = { text: text, visible: $_this.is(':visible') };
+					}
+					is_first = false;
 				});
 				$this.data('data_array', data_array);
 				
