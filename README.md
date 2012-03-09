@@ -24,6 +24,7 @@ on this basic usage, all the #table1 rows will be filtered based on the first te
 * oddClass - class for the odd rows, applied if alternataClasses is set to true. Defaults to 'odd'.
 * evenClass - class for the even rows, applied if alternataClasses is set to true. Defaults to 'even'.
 * ignoreFirstRow - whether the first row will be ignored or not (default: true)
+* beforeQuery - function called just before the filter is applied on a query, when the first character is typed (default: null)
 	
 example on how to filter a list and set a specific input text field:
 
